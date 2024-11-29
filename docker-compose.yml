@@ -1,36 +1,34 @@
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
 
   mtg:
-    container_name: "magic-gathering-api"
+    container_name: mtg-service
     build:
       context: .
       dockerfile: ./Dockerfile
     restart: always
     depends_on:
-      - magic-gathering-api
+      - db_mtg
     ports:
       - "3000:3000"
+    environment:
+      MONGO_URL: mongodb://magic-gathering-db:27017/project_card_game
 
   db_mtg:
-    container_name: "magic-gathering-api"
-    image: "mongo:latest"
+    container_name: magic-gathering-db
+    image: mongo:latest
     restart: always
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_DATABASE: 'project_card_game'
-      MONGO_INITDB_ROOT_USERNAME: 'magic-gathering-api'
-      MONGO_INITDB_ROOT_PASSWORD: 'magic-gathering-api'
-
-  rabbitmq:
-  image: rabbitmq:3-management
-  container_name: rabbitmq
-  ports:
-    - "5672:5672"
-    - "15672:15672"
-  environment:
-    RABBITMQ_DEFAULT_USER: user
-    RABBITMQ_DEFAULT_PASS: password
-
-
-      
+      MONGO_INITDB_DATABASE: project_card_game
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
