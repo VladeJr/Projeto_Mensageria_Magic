@@ -1,12 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards } from '@nestjs/common';
 import { CardsService } from '../service/cards.service';
-import { Card } from './card';
+import { Card } from '../cards/card';
 import { Response } from 'express';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/roles/roles.decorator';
 import { Role } from 'src/roles/enums/functions.enum';
 import { BadRequestException } from '@nestjs/common';
-
 
 @UseGuards(AuthGuard)
 @Roles(Role.Admin)
@@ -14,7 +13,7 @@ import { BadRequestException } from '@nestjs/common';
 export class CardsController {
     constructor(
         private readonly cardsService: CardsService
-    ) { }
+    ) {}
 
     @Get()
     async getAllCards(): Promise<Card[]> {
@@ -64,7 +63,7 @@ export class CardsController {
     @Delete(':id')
     async delete(@Param('id') id: string): Promise<Card> {
         try {
-            return await this.cardsService.delete(id)
+            return await this.cardsService.delete(id);
         } catch (err) {
             console.log("Error: " + err);
         }
@@ -73,13 +72,12 @@ export class CardsController {
     @Delete()
     async deleteAll(): Promise<void> {
         try {
-            await this.cardsService.deleteAll()
+            await this.cardsService.deleteAll();
         } catch (err) {
             console.log("Error: " + err);
         }
     }
 
-    // Rota para importar um baralho e validar no formato Commander
     @Roles(Role.User, Role.Admin)
     @Post('/importDeck')
     async importDeck(@Body() deck: any): Promise<string> {
@@ -90,6 +88,16 @@ export class CardsController {
         }
     }
 
+    @Roles(Role.User, Role.Admin)
+    @Post('/enqueueImportDeck')
+    async enqueueDeckImport(@Body() deck: any): Promise<string> {
+        try {
+            await this.cardsService.enqueueDeckImport(deck);
+            return 'Deck import request queued successfully!';
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
 
     @Roles(Role.User, Role.Admin)
     @Post('/seedingDeck/:id')
@@ -99,6 +107,7 @@ export class CardsController {
             return res.status(result.statusCode).send({ message: result.message });
         } catch (err) {
             console.log("Error: " + err);
+            throw new BadRequestException(err.message);
         }
     }
 }

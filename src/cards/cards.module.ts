@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Card, CardSchema } from './card';
 import { CardsService } from '../service/cards.service';
-import { CardsController } from './cards.controller';
+import { CardsController } from '../controller/cards.controller';
 import { Deck, DeckSchema } from './deck';
 
 @Module({
