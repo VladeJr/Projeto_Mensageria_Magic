@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Res, UseGuards } from '@nestjs/common';
-import { CardsService } from './cards.service';
+import { CardsService } from '../service/cards.service';
 import { Card } from './card';
 import { Response } from 'express';
 import { AuthGuard } from 'src/auth/auth.guard';

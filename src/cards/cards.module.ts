@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Card, CardSchema } from './card';
-import { CardsService } from './cards.service';
+import { CardsService } from '../service/cards.service';
 import { CardsController } from './cards.controller';
 import { Deck, DeckSchema } from './deck';
 
