@@ -21,3 +21,16 @@ services:
       MONGO_INITDB_DATABASE: 'project_card_game'
       MONGO_INITDB_ROOT_USERNAME: 'magic-gathering-api'
       MONGO_INITDB_ROOT_PASSWORD: 'magic-gathering-api'
+
+  rabbitmq:
+  image: rabbitmq:3-management
+  container_name: rabbitmq
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+  environment:
+    RABBITMQ_DEFAULT_USER: user
+    RABBITMQ_DEFAULT_PASS: password
+
+
+      

@@ -1,22 +1,27 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { CardsModule } from './cards/cards.module';
-import * as dotenv from 'dotenv'
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './roles/roles.guard';
-
-dotenv.config();
-const { DB_USER, DB_PASS, DB_HOST, DB_PORT, DB_NAME } = process.env
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule } from '@nestjs/config';
+import { RabbitMQService } from './service/rabbitmq.service';
+import { RabbitMQController } from './controller/rabbitmq.controller';
 
 @Module({
-  imports: [MongooseModule.forRoot(`mongodb://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`),
-    CardsModule, UsersModule, AuthModule],
-  controllers: [],
-  providers: [{
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-  }],
+  imports: [
+    ConfigModule.forRoot(), 
+    ClientsModule.register([
+      {
+        name: 'RABBITMQ_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: [process.env.RABBITMQ_URL || 'amqp://localhost:5672'], 
+          queue: 'default_queue', 
+          queueOptions: {
+            durable: true, 
+          },
+        },
+      },
+    ]),
+  ],
+  controllers: [RabbitMQController],
+  providers: [RabbitMQService],
 })
-export class AppModule { }
+export class AppModule {}
