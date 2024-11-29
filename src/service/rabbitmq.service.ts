@@ -9,4 +9,8 @@ export class RabbitMQService {
   async sendMessage(queue: string, message: any): Promise<void> {
     await this.client.emit(queue, message).toPromise();
   }
+
+  async sendNotification(message: any): Promise<void> {
+    await this.sendMessage('deck_updates_queue', message);
+  }
 }
