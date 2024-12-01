@@ -11,12 +11,12 @@ export class RabbitMQService {
   ) {}
 
   async sendMessage(queue: string, message: any, options: any = {}): Promise<void> {
-    this.loggingService.log(`Sending message to queue: ${queue}`,'RabbitMQService');
+    this.loggingService.log(`Sending message to queue: ${queue}`, 'RabbitMQService');
     try {
       await this.client.emit(queue, { message, options }).toPromise();
       this.loggingService.log(`Message sent to queue: ${queue}`, 'RabbitMQService');
     } catch (error) {
-      this.loggingService.error(`Failed to send message to queue: ${queue}` , error.stack, 'RabbitMQService');
+      this.loggingService.error(`Failed to send message to queue: ${queue}`, error.stack, 'RabbitMQService');
       throw error;
     }
   }
