@@ -6,6 +6,8 @@ import { CardsModule } from './cards/cards.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { DeckImportWorker } from './deck-import.worker';
+import { NotificationsService } from './service/notifications.service';
+import { NotificationsGateway } from './service/notifications.gateway';
 
 @Module({
   imports: [
@@ -30,6 +32,6 @@ import { DeckImportWorker } from './deck-import.worker';
     UsersModule,
     AuthModule,
   ],
-  providers: [DeckImportWorker],
+  providers: [DeckImportWorker, NotificationsService, NotificationsGateway],
 })
 export class AppModule {}
