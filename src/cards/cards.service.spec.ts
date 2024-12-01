@@ -47,7 +47,13 @@ describe('CardsService', () => {
   });
 
   it('should enqueue a deck with admin priority', async () => {
-    const deck = { cards: Array(100).fill({ name: 'Test Card', type: 'Legendary Creature' }) };
+    const deck = {
+      cards: [
+        { name: 'Test Card 1', type: 'Legendary Creature' }, // Comandante lendário
+        ...Array(99).fill({ name: 'Test Card 2', type: 'Creature' }),
+      ],
+    };
+
     await service.enqueueDeckImport(deck, true);
 
     expect(mockDeckModel.create).toHaveBeenCalledWith(deck);
@@ -59,7 +65,13 @@ describe('CardsService', () => {
   });
 
   it('should enqueue a deck with normal priority', async () => {
-    const deck = { cards: Array(100).fill({ name: 'Test Card', type: 'Legendary Creature' }) };
+    const deck = {
+      cards: [
+        { name: 'Test Card 1', type: 'Legendary Creature' }, // Comandante lendário
+        ...Array(99).fill({ name: 'Test Card 2', type: 'Creature' }),
+      ],
+    };
+
     await service.enqueueDeckImport(deck, false);
 
     expect(mockDeckModel.create).toHaveBeenCalledWith(deck);
