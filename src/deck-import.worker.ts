@@ -4,9 +4,15 @@ import { RabbitSubscribe } from '@nestjs-plus/rabbitmq';
 @Injectable()
 export class DeckImportWorker {
   @RabbitSubscribe({
-    exchange: '',
-    routingKey: 'deck_import_queue',
+    exchange: '', 
+    routingKey: 'deck_import_queue', 
     queue: 'deck_import_queue',
+    queueOptions: {
+      durable: true,
+      arguments: {
+        'x-max-priority': 10, 
+      },
+    },
   })
   async handleDeckImport(deck: any): Promise<void> {
     console.log(`Received deck for import: ${JSON.stringify(deck)}`);
