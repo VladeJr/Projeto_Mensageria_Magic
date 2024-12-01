@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { RabbitMQModule } from '@nestjs-plus/rabbitmq';
 import { ClientsModule, Transport } from '@nestjs/microservices';
@@ -34,4 +34,10 @@ import { NotificationsGateway } from './service/notifications.gateway';
   ],
   providers: [DeckImportWorker, NotificationsService, NotificationsGateway],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(){
+    const logger = new Logger(AppModule.name);
+    logger.log('AppModule Running');
+
+  }
+}
