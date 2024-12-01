@@ -9,8 +9,9 @@ export class NotificationsService {
     private readonly notificationsGateway: NotificationsGateway,
   ) {}
 
-  async notifyDeckUpdate(updateDetails: any) {
-    await this.rabbitMQService.sendNotification(updateDetails);
+  async notifyDeckUpdate(updateDetails: any): Promise<void> {
+    await this.rabbitMQService.sendMessage('deck_updates_queue', updateDetails);
+
     this.notificationsGateway.notifyClient('deck_update', updateDetails);
   }
 }
