@@ -6,6 +6,7 @@ import { CardsModule } from './cards/cards.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { DeckImportWorker } from './deck-import.worker';
+import { NotificationsWorker } from './notifications.worker';
 import { NotificationsService } from './service/notifications.service';
 import { NotificationsGateway } from './service/notifications.gateway';
 import { RabbitMQService } from './service/rabbitmq.service';
@@ -34,6 +35,13 @@ import { LoggingService } from './service/logging.service';
     UsersModule,
     AuthModule,
   ],
-  providers: [DeckImportWorker, NotificationsService, NotificationsGateway, RabbitMQService, LoggingService],
+  providers: [
+    DeckImportWorker,
+    NotificationsWorker,
+    NotificationsService,
+    NotificationsGateway,
+    RabbitMQService,
+    LoggingService,
+  ],
 })
 export class AppModule {}
