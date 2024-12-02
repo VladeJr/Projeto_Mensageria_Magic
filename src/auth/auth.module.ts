@@ -5,6 +5,8 @@ import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth.constants';
 
+
+//módulo 
 @Module({
   imports: [UsersModule,
     JwtModule.register({
