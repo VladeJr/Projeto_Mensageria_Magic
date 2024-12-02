@@ -33,19 +33,24 @@ docker-compose up -d
 ## Instale Dependências:
 
 bash
+
 npm install
-Inicie o Servidor:
+
+## Inicie o Servidor:
 
 bash
+
 npm run start:dev
 
 ## Arquitetura do Sistema
 RabbitMQ:
 Fila deck_import_queue: Processa requisições de importação de baralhos.
 Fila deck_updates_queue: Gerencia notificações de atualizações.
-WebSockets:
+
+## WebSockets:
 Gateway para notificar clientes sobre atualizações em tempo real.
-MongoDB:
+
+## MongoDB:
 Banco de dados para armazenamento de baralhos e cartas.
 
 ## Uso
@@ -59,7 +64,6 @@ Clientes conectados via WebSocket recebem notificações de eventos.
 ## Painel RabbitMQ:
 Acesse http://localhost:15672.
 Login: user | Senha: password
-Endpoints da API
 
 ## Importar Baralho
 POST /cards/enqueueImportDeck
@@ -99,7 +103,9 @@ Logs de eventos WebSocket.
 
 ## Testes
 Executar Testes:
+
 bash
+
 npm run test
 
 ## Cobertura de Testes:
