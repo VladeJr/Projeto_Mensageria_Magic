@@ -5,6 +5,7 @@ import { ROLES_KEY } from './roles.decorator';
 import { JwtService } from '@nestjs/jwt';
 import { IS_PUBLIC_KEY } from 'src/auth/auth.decorator';
 
+//injectables 
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(
@@ -12,6 +13,7 @@ export class RolesGuard implements CanActivate {
     private jwtService: JwtService,
   ) { }
 
+  //assíncrono
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
       context.getHandler(),
@@ -49,6 +51,7 @@ export class RolesGuard implements CanActivate {
     return requiredRoles.some((role) => userRoles.includes(role));
   }
 
+  //privado
   private extractTokenFromHeader(request: any): string | undefined {
     const authorizationHeader = request.headers.authorization;
     if (authorizationHeader) {
