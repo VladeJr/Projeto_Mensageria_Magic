@@ -11,11 +11,11 @@ export class NotificationsWorker {
   ) {}
 
   @RabbitSubscribe({
-    exchange: '', // Default exchange
+    exchange: '', 
     routingKey: 'deck_updates_queue',
     queue: 'deck_updates_queue',
     queueOptions: {
-      durable: true, // Ensures the queue persists after RabbitMQ restarts
+      durable: true, 
     },
   })
   async handleDeckUpdateNotification(updateDetails: any): Promise<void> {
@@ -24,7 +24,6 @@ export class NotificationsWorker {
       'NotificationsWorker'
     );
 
-    // Emit WebSocket event to connected clients
     this.notificationsGateway.notifyClient('deck_update', updateDetails);
   }
 }
