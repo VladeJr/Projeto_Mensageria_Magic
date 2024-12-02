@@ -3,6 +3,8 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { compare } from 'bcrypt';
 
+
+//injeáveis
 @Injectable()
 export class AuthService {
     constructor(
@@ -10,6 +12,7 @@ export class AuthService {
         private jwtService: JwtService
     ) { }
 
+    //assíncrono sign in
     async signIn(
         email: string,
         pass: string
